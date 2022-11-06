@@ -12,9 +12,10 @@ struct ContentView: View {
     @State private var numberOfPeople = 0
     @State private var tipPercentage = 20
     @FocusState private var amountIsFocused: Bool
-    
+    @State private var useRedView = false
     var localCurrency : FloatingPointFormatStyle<Double>.Currency = .currency(code: Locale.current.currencyCode ?? "EUR")
     //let tipPercentages = [10, 15, 20, 25, 0]
+    
     
     var grandTotal: Double {
         let tipSelection = Double(tipPercentage)
@@ -31,6 +32,7 @@ struct ContentView: View {
         
         return amountPerPerson
     }
+
     
     var body: some View {
         NavigationView {
@@ -61,10 +63,10 @@ struct ContentView: View {
                 
                 Section {
                     Text(grandTotal, format: localCurrency)
-                } header: {
+                        .foregroundColor(tipPercentage == 0 ? .red : .blue)
+                } header :{
                     Text("Total amount")
                 }
-                
                 Section {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "EUR"))
                 } header: {
